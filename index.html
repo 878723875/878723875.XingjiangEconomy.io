@@ -1,20 +1,194 @@
-<body style="background-color:#144A74;">                  <!-- 设置页面背景颜色 -->
-  <style>
-      #main {
-        display: flex;
-        justify-content: space-between;
-        margin: 15px;
-        height: 550px
-      }
-      html,
-      body {
-        width: 100%;
-      }
-  </style>
-  <body>
-    <div id="main">
-      <div id="description" style="color: ghostwhite">
-    </div>
+<!-- code of html -->
+<!DOCTYPE html>
+<html>
 
-  </body>
-  <div id="main"></div>
+<head>
+	<!-- Load plotly.js into the DOM -->
+    <title>新疆现代经济建设</title>
+    <script src="https://cdn.plot.ly/plotly-2.13.2.min.js"></script>
+    <script src='d3.min.js'></script>
+</head>
+
+<body style="background-color:#00192E;">                  
+  <!-- 设置页面背景颜色 -->
+<body>
+<div id="main">
+  <div id="description" style="color: ghostwhite">
+  </div>
+  <!-- 定义图表显示区域 -->
+  <div id="graph" style="width: 100%"></div>
+</div>
+
+<script>
+
+//js
+// let Plotly = require('@/plugins/custom-plotly.js'); //引入
+// initViolin(){  //渲染violin图
+  let rows = [
+    {
+      EXPRESSION_VALUE: 13.97,
+      GROUP_NAME: "1978",
+      GROUP_SHORT: "第一产业(农林牧渔业)",
+    },
+    {
+      EXPRESSION_VALUE: 274.38,
+      GROUP_NAME: "2000",
+      GROUP_SHORT: "第一产业(农林牧渔业)",
+    },
+    {
+      EXPRESSION_VALUE: 1000.29,
+      GROUP_NAME: "2010",
+      GROUP_SHORT: "第一产业(农林牧渔业)",
+    },
+    {
+      EXPRESSION_VALUE: 1409.66,
+      GROUP_NAME: "2015",
+      GROUP_SHORT: "第一产业(农林牧渔业)",
+    },
+    {
+      EXPRESSION_VALUE: 1781.76,
+      GROUP_NAME: "2019",
+      GROUP_SHORT: "第一产业(农林牧渔业)",
+    },
+    {
+      EXPRESSION_VALUE: 1981.28,
+      GROUP_NAME: "2020",
+      GROUP_SHORT: "第一产业(农林牧渔业)",
+    },
+    {
+      EXPRESSION_VALUE: 18.35,
+      GROUP_NAME: "1978",
+      GROUP_SHORT: "第二产业(工业)",
+    },
+    {
+      EXPRESSION_VALUE: 525,
+      GROUP_NAME: "2000",
+      GROUP_SHORT: "第二产业(工业)",
+    },
+    {
+      EXPRESSION_VALUE: 2479.79,
+      GROUP_NAME: "2010",
+      GROUP_SHORT: "第二产业(工业)",
+    },
+    {
+      EXPRESSION_VALUE: 3446.06,
+      GROUP_NAME: "2015",
+      GROUP_SHORT: "第二产业(工业)",
+    },
+    {
+      EXPRESSION_VALUE: 4784.44,
+      GROUP_NAME: "2019",
+      GROUP_SHORT: "第二产业(工业)",
+    },
+    {
+      EXPRESSION_VALUE: 4744.45,
+      GROUP_NAME: "2020",
+      GROUP_SHORT: "第二产业(工业)",
+    },
+    {
+      EXPRESSION_VALUE: 6.75,
+      GROUP_NAME: "1978",
+      GROUP_SHORT: "第三产业(其他行业)",
+    },
+    {
+      EXPRESSION_VALUE: 564.18,
+      GROUP_NAME: "2000",
+      GROUP_SHORT: "第三产业(其他行业)",
+    },
+    {
+      EXPRESSION_VALUE: 1880.1,
+      GROUP_NAME: "2010",
+      GROUP_SHORT: "第三产业(其他行业)",
+    },
+    {
+      EXPRESSION_VALUE: 4451.16,
+      GROUP_NAME: "2015",
+      GROUP_SHORT: "第三产业(其他行业)",
+    },
+    {
+      EXPRESSION_VALUE: 7030.91,
+      GROUP_NAME: "2019",
+      GROUP_SHORT: "第三产业(其他行业)",
+    },
+    {
+      EXPRESSION_VALUE: 7071.85,
+      GROUP_NAME: "2020",
+      GROUP_SHORT: "第三产业(其他行业)",
+    },
+  ];
+  function unpack(rows, key) {
+    return rows.map(function(row) { return row[key]; });
+  }
+  let data = [{
+    type: 'violin',
+    x: unpack(rows, 'GROUP_SHORT'),
+    y: unpack(rows, 'EXPRESSION_VALUE'),
+    points: 'none',
+    //hoverinfo: 'skip',//hover不显示数据信息
+    box: {
+      visible: true
+    },
+    line: {
+      color: 'green',
+    },
+    /*fillcolor: 'cornflowerblue',
+    opacity: 0.6,*/
+    meanline: {
+      visible: true
+    },
+    //showlegend: false,//图例
+    transforms: [{
+      type: 'groupby',
+      groups: unpack(rows, 'GROUP_SHORT'),
+      styles: [
+      {target: '第一产业(农林牧渔业)', value: {line: {color: 'green'}}},
+      {target: '第二产业(工业)', value: {line: {color: 'blue'}}},
+      {target: '第三产业(其他行业)', value: {line: {color: 'red'}}},
+    ],
+    }]
+  }]
+
+  let layout = {
+    title: {
+      text: "新疆经济结构统计分析图",
+      font:{
+        color:"#e8dede",
+        size:20
+      }
+    },
+    paper_bgcolor:"#00192E",
+    plot_bgcolor:"#00192E",
+    xaxis: {
+      "tickangle": 10,//倾斜角度
+      title: {
+        text: "产业类型"
+      },
+      color:"#e8dede",
+      gridcolor:"#4d4d4d",
+    },
+    yaxis: {
+      zeroline: false,
+      title: {
+        text: '生产值或净利润值(/亿元)'
+      },
+      color:"#e8dede",
+      gridcolor:"#4d4d4d",
+    },
+    legend:{
+      font:{
+        color:"#e8dede",
+        size:13
+      }
+    },
+    height: 500
+  }
+
+  Plotly.newPlot('graph', data, layout, {showSendToCloud: true});
+    //   },
+
+
+</script>
+
+
+
+</html>
