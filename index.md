@@ -1,37 +1,169 @@
-## Welcome to GitHub Pages
+<!-- code of html -->
+<!DOCTYPE html>
+<html>
 
-You can use the [editor on GitHub](https://github.com/878723875/878723875.XingjiangEconomy.io/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+<head>
+	<!-- Load plotly.js into the DOM -->
+    <title>新疆现代经济建设</title>
+    <script src="https://cdn.plot.ly/plotly-2.13.2.min.js"></script>
+    <script src='d3.min.js'></script>
+</head>
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+<body>
+    <!-- <div id='myDiv'>Plotly chart will be drawn inside this DIV</div> -->
+    <div id="graph"></div>
 
-### Markdown
+</body>
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+<script>
 
-```markdown
-Syntax highlighted code block
+//js
+// let Plotly = require('@/plugins/custom-plotly.js'); //引入
+// initViolin(){  //渲染violin图
+  let rows = [
+    {
+      EXPRESSION_VALUE: 13.97,
+      GROUP_NAME: "1978",
+      GROUP_SHORT: "第一产业(农林牧渔业)",
+    },
+    {
+      EXPRESSION_VALUE: 274.38,
+      GROUP_NAME: "2000",
+      GROUP_SHORT: "第一产业(农林牧渔业)",
+    },
+    {
+      EXPRESSION_VALUE: 1000.29,
+      GROUP_NAME: "2010",
+      GROUP_SHORT: "第一产业(农林牧渔业)",
+    },
+    {
+      EXPRESSION_VALUE: 1409.66,
+      GROUP_NAME: "2015",
+      GROUP_SHORT: "第一产业(农林牧渔业)",
+    },
+    {
+      EXPRESSION_VALUE: 1781.76,
+      GROUP_NAME: "2019",
+      GROUP_SHORT: "第一产业(农林牧渔业)",
+    },
+    {
+      EXPRESSION_VALUE: 1981.28,
+      GROUP_NAME: "2020",
+      GROUP_SHORT: "第一产业(农林牧渔业)",
+    },
+    {
+      EXPRESSION_VALUE: 18.35,
+      GROUP_NAME: "1978",
+      GROUP_SHORT: "第二产业(工业)",
+    },
+    {
+      EXPRESSION_VALUE: 525,
+      GROUP_NAME: "2000",
+      GROUP_SHORT: "第二产业(工业)",
+    },
+    {
+      EXPRESSION_VALUE: 2479.79,
+      GROUP_NAME: "2010",
+      GROUP_SHORT: "第二产业(工业)",
+    },
+    {
+      EXPRESSION_VALUE: 3446.06,
+      GROUP_NAME: "2015",
+      GROUP_SHORT: "第二产业(工业)",
+    },
+    {
+      EXPRESSION_VALUE: 4784.44,
+      GROUP_NAME: "2019",
+      GROUP_SHORT: "第二产业(工业)",
+    },
+    {
+      EXPRESSION_VALUE: 4744.45,
+      GROUP_NAME: "2020",
+      GROUP_SHORT: "第二产业(工业)",
+    },
+    {
+      EXPRESSION_VALUE: 6.75,
+      GROUP_NAME: "1978",
+      GROUP_SHORT: "第三产业(其他行业)",
+    },
+    {
+      EXPRESSION_VALUE: 564.18,
+      GROUP_NAME: "2000",
+      GROUP_SHORT: "第三产业(其他行业)",
+    },
+    {
+      EXPRESSION_VALUE: 1880.1,
+      GROUP_NAME: "2010",
+      GROUP_SHORT: "第三产业(其他行业)",
+    },
+    {
+      EXPRESSION_VALUE: 4451.16,
+      GROUP_NAME: "2015",
+      GROUP_SHORT: "第三产业(其他行业)",
+    },
+    {
+      EXPRESSION_VALUE: 7030.91,
+      GROUP_NAME: "2019",
+      GROUP_SHORT: "第三产业(其他行业)",
+    },
+    {
+      EXPRESSION_VALUE: 7071.85,
+      GROUP_NAME: "2020",
+      GROUP_SHORT: "第三产业(其他行业)",
+    },
+  ];
+  function unpack(rows, key) {
+    return rows.map(function(row) { return row[key]; });
+  }
+  let data = [{
+    type: 'violin',
+    x: unpack(rows, 'GROUP_SHORT'),
+    y: unpack(rows, 'EXPRESSION_VALUE'),
+    points: 'none',
+    //hoverinfo: 'skip',//hover不显示数据信息
+    box: {
+      visible: true
+    },
+    line: {
+      color: 'green',
+    },
+    /*fillcolor: 'cornflowerblue',
+    opacity: 0.6,*/
+    meanline: {
+      visible: true
+    },
+    //showlegend: false,//图例
+    transforms: [{
+      type: 'groupby',
+      groups: unpack(rows, 'GROUP_SHORT'),
+      styles: [
+      {target: '第一产业(农林牧渔业)', value: {line: {color: 'green'}}},
+      {target: '第二产业(工业)', value: {line: {color: 'blue'}}},
+      {target: '第三产业(其他行业)', value: {line: {color: 'red'}}},
+    ],
+    }]
+  }]
 
-# Header 1
-## Header 2
-### Header 3
+  let layout = {
+    title: "新疆经济结构统计分析图",
+    xaxis: {
+      "tickangle": 10,//倾斜角度
+      title: {
+      },
+    },
+    yaxis: {
+      zeroline: false,
+      title: {
+        text: '生产值或净利润值(/亿元)'
+      },
+    },
+    height: 500
+  }
 
-- Bulleted
-- List
+  Plotly.newPlot('graph', data, layout, {showSendToCloud: true});
+    //   },
 
-1. Numbered
-2. List
 
-**Bold** and _Italic_ and `Code` text
+</script> 
 
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/878723875/878723875.XingjiangEconomy.io/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+</html>
